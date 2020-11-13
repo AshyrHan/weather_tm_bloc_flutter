@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:weather_tm_bloc/bloc/bloc/weather_bloc.dart';
 import 'package:weather_tm_bloc/const.dart';
 import 'package:weather_tm_bloc/repository/weather-repo.dart';
+import 'package:weather_tm_bloc/screens/weather_ui.dart';
 
 class Home extends StatelessWidget {
   final weatherRepository = WeatherRepository();
@@ -16,15 +17,8 @@ class Home extends StatelessWidget {
             backgroundColor: HexColor('ffffff'),
             body: BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, state) {
-                if (state is WeatherEmpy) {
-                  return Column(
-                    children: [
-                      Center(
-                        child: Text('Выберите город'),
-                      ),
-                      ButtonWidget()
-                    ],
-                  );
+                if (state is Weatherinitial) {
+                  return WeatherUI();
                 }
                 if (state is WeatherLoading) {
                   return Center(

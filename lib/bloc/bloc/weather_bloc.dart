@@ -11,7 +11,7 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
-  WeatherBloc({@required this.weatherRepository}) : super(WeatherEmpy());
+  WeatherBloc({@required this.weatherRepository}) : super(Weatherinitial());
 
   @override
   Stream<WeatherState> mapEventToState(
