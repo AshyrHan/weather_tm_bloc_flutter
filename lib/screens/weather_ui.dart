@@ -13,7 +13,7 @@ class WeatherUI extends StatelessWidget {
         physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
-            customAppBar(),
+            customAppBar(context),
             cityName(context),
             weatherIcon(context),
             currentWeather(context),

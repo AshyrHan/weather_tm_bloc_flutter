@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:weather_tm_bloc/bloc/bloc/weather_bloc.dart';
+import 'package:weather_tm_bloc/const.dart';
 import 'package:weather_tm_bloc/styles/app_style.dart';
 
-Widget customAppBar() {
+Widget customAppBar(BuildContext context) {
+  // ignore: close_sinks
+  final weatherBloc = BlocProvider.of<WeatherBloc>(context);
   return SafeArea(
     child: Container(
       height: 30.0,
@@ -16,7 +21,9 @@ Widget customAppBar() {
                 Icons.menu,
                 color: HexColor('2E3442'),
               ),
-              onPressed: () {}),
+              onPressed: () {
+                weatherBloc.add(FetchWeather(latlan: maryCity));
+              }),
         ],
       ),
     ),

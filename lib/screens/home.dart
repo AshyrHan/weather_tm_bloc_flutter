@@ -7,12 +7,13 @@ import 'package:weather_tm_bloc/repository/weather-repo.dart';
 import 'package:weather_tm_bloc/screens/weather_ui.dart';
 
 class Home extends StatelessWidget {
-  final weatherRepository = WeatherRepository();
+//  final weatherRepository = WeatherRepository();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WeatherBloc>(
-        create: (context) => WeatherBloc(weatherRepository: weatherRepository),
+        create: (context) =>
+            WeatherBloc(weatherRepository: WeatherRepository()),
         child: Scaffold(
             backgroundColor: HexColor('ffffff'),
             body: BlocBuilder<WeatherBloc, WeatherState>(
