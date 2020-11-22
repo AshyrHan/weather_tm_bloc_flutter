@@ -1,59 +1,66 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_tm_bloc/bloc/bloc/weather_bloc.dart';
-import 'package:weather_tm_bloc/bloc/choose_bloc/bloc/choosebloc_bloc.dart';
 import 'package:weather_tm_bloc/const.dart';
-
 import 'package:weather_tm_bloc/styles/app_style.dart';
+import 'package:weather_tm_bloc/utils.dart';
 
 // ignore: must_be_immutable
 class DrawerWidget extends StatelessWidget {
-  getCity() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('city') ?? '';
-  }
-
   @override
   Widget build(BuildContext context) {
-    // ignore: close_sinks
-    final cBloc = BlocProvider.of<ChooseblocBloc>(context);
     return Container(
       width: MediaQuery.of(context).size.width * 0.7,
       child: Drawer(
         child: ListView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           shrinkWrap: true,
           children: [
-            Container(
-              color: Colors.blue[200],
-              child: ListTile(
-                title: Text(
-                  'Saýlanan şäher',
-                  style: Style.primarytextStyle(),
-                ),
-                subtitle: Text(
-                  getCity(),
-                  style: Style.conditionNameStyle(),
-                ),
-                trailing: Container(
-                  width: 80.0,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.wb_sunny,
-                        color: Colors.yellow,
+            BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
+              if (state is WeatherLoaded) {
+                return Container(
+                  color: Colors.blue[200],
+                  child: ListTile(
+                    title: Text(
+                      'Saýlanan şäher',
+                      style: Style.primarytextStyle(),
+                    ),
+                    subtitle: Text(
+                      state.nameCity,
+                      style: Style.conditionNameStyle(),
+                    ),
+                    trailing: Container(
+                      width: 80.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Utils.codeToImage(
+                                state.weatherModel.current.condition.code),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Text(
+                              Utils.formatTemp(
+                                state.weatherModel.current.temp_c,
+                              ),
+                              style: Style.conditionNameStyle(),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Text('+17\'C'),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                );
+              }
+              return Container();
+            }),
+
             Container(
               child: expTile(ahalMap, 'Ahal welayat'),
             ),
@@ -69,12 +76,7 @@ class DrawerWidget extends StatelessWidget {
             Container(
               child: expTile(lebapMap, 'Lebap welayat'),
             ),
-            IconButton(
-                icon: Icon(Icons.gps_off),
-                onPressed: () {
-                  cBloc.add(OnTapedInitial());
-                  print('object');
-                })
+
             //  ButtonInitial(),
           ],
         ),
@@ -86,10 +88,9 @@ class DrawerWidget extends StatelessWidget {
     return ExpansionTileCard(
         elevation: 0,
         animateTrailing: true,
-        title: Text(
-          title,
-          style: Style.primarytextStyle(),
-        ),
+        title: Text(title,
+            style: Style.primarytextStyle()
+                .copyWith(fontSize: 16.0, fontWeight: FontWeight.w600)),
         children: [
           ListView.builder(
               shrinkWrap: true,
@@ -97,23 +98,17 @@ class DrawerWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
                     // ignore: close_sinks
                     final weatherBloc = BlocProvider.of<WeatherBloc>(context);
                     weatherBloc.add(FetchWeather(
                       latlan: cities.entries.elementAt(index).value,
                       cityName: cities.entries.elementAt(index).key,
                     ));
-                    prefs.setString(
-                        'city', cities.entries.elementAt(index).key);
                   },
                   title: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      cities.entries.elementAt(index).key,
-                      style: Style.primarytextStyle(),
-                    ),
+                    child: Text(cities.entries.elementAt(index).key,
+                        style: Style.primarytextStyle()),
                   ),
                   // trailing: IconButton(
                   //     icon: Icon(
@@ -134,21 +129,3 @@ class DrawerWidget extends StatelessWidget {
 // }
 
 }
-
-// class ButtonInitial extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider<ChooseblocBloc>(
-//       create: (context) => ChooseblocBloc(),
-//       child: IconButton(
-//         icon: Icon(Icons.get_app),
-//         onPressed: () {
-//           // ignore: close_sinks
-//           var _choosebloc = BlocProvider.of<ChooseblocBloc>(context);
-//           _choosebloc.add(OnTapedInitial());
-//           print('pressed');
-//         },
-//       ),
-//     );
-//   }
-// }
