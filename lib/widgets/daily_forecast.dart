@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather_tm_bloc/models/weather_model.dart';
 import 'package:weather_tm_bloc/styles/app_style.dart';
 
+import '../utils.dart';
+
 class DailyForecast extends StatelessWidget {
+  final WeatherCurrentModel model;
+
+  DailyForecast({Key key, this.model}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.red,
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 10,
+        itemCount: model.forecast.forecastday.length,
         itemBuilder: (context, index) {
-          return Container(
-            child: dailyItem(context),
+          return Column(
+            children: [
+              Container(
+                child: dailyItem(context, index),
+              ),
+              Divider(
+                  //color: Colors.black,
+                  ),
+            ],
           );
         },
       ),
     );
   }
 
-  Widget dailyItem(BuildContext context) {
+  Widget dailyItem(BuildContext context, int index) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0),
+      //   color: Colors.yellow,
+      margin: EdgeInsets.symmetric(vertical: 2.0),
       width: size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -34,12 +48,27 @@ class DailyForecast extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '13 noyabr',
-                  style: Style.meteoInfoStyle(),
-                ),
+                    Utils.dateFormatMonth(
+                        model.forecast.forecastday[index].date),
+                    // model.forecast.forecastday[index].date.toString(),
+                    style: TextStyle(
+                      color: Utils.isHoliday(
+                              model.forecast.forecastday[index].date)
+                          ? Colors.red
+                          : Style.primaryColor,
+                      fontFamily: Style.primaryFont,
+                      fontSize: 10.0,
+                    )),
                 Text(
-                  'Shu gun',
-                  style: Style.primarytextStyle(),
+                  Utils.dateFormatDay(model.forecast.forecastday[index].date),
+                  style: TextStyle(
+                    color:
+                        Utils.isHoliday(model.forecast.forecastday[index].date)
+                            ? Colors.red
+                            : Style.primaryColor,
+                    fontFamily: Style.primaryFont,
+                    fontSize: 14.0,
+                  ),
                 ),
               ],
             ),
@@ -51,16 +80,17 @@ class DailyForecast extends StatelessWidget {
             width: 50.0,
             height: 40.0,
             child: Padding(
-              padding: EdgeInsets.all(1.0),
-              child: SvgPicture.asset('assets/images/partyCloudly.svg'),
-            ),
+                padding: EdgeInsets.all(1.0),
+                child: Utils.codeToImage(
+                    model.forecast.forecastday[index].day.condition.code)),
           ),
 
           //
 
           Container(
             child: Text(
-              '+11\'C',
+              Utils.formatTemp(model.forecast.forecastday[index].day.maxTemp),
+              // model.forecast.forecastday[index].day.maxTemp.toString(),
               style: Style.primarytextStyle(),
             ),
           ),
@@ -69,7 +99,7 @@ class DailyForecast extends StatelessWidget {
 
           Container(
             child: Text(
-              '+8\'C',
+              Utils.formatTemp(model.forecast.forecastday[index].day.minTemp),
               style: Style.meteoInfoStyle(),
             ),
           ),

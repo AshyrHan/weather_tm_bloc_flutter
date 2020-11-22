@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:weather_tm_bloc/const.dart';
+
 import 'package:weather_tm_bloc/models/weather_model.dart';
 
 class WeatherApi {
-  Future<WeatherModel> fetchWeather(String latlan) async {
-    final weatherUrl = '$baseUrl$currentW?key=$apiKey&q=$latlan';
-    print(weatherUrl);
+  Future<WeatherCurrentModel> fetchWeather(String latlan) async {
+    final weatherUrl = '$baseUrl$forecastW?key=$apiKey&q=$latlan&days=3';
+
     //final weatherUrl =
     //    'https://api.weatherapi.com/v1/current.json?key=474542f8d8ed494e92284130201211&q=37.6,61.83';
     final weatherResponse = await http.get(weatherUrl);
@@ -17,9 +18,23 @@ class WeatherApi {
       throw Exception('error connetcion');
     }
 
-    final weatherJson = jsonDecode(weatherResponse.body);
-    return WeatherModel.fromJson(weatherJson['current']);
+    final dynamic weatherJson = jsonDecode(weatherResponse.body);
+    return WeatherCurrentModel.fromJson(weatherJson);
   }
+
+  // Future<Weather> fetchHourlyWeather(String latlan) async {
+  //   final weatherUrl = '$baseUrl$forecastW?key=$apiKey&q=$latlan';
+
+  //   final weatherResponse = await http.get(weatherUrl);
+
+  //   if (weatherResponse.statusCode != 200) {
+  //     throw Exception('error connetcion');
+  //   }
+  //   // ignore: avoid_print
+  //   print(weatherResponse.body.length);
+  //   final dynamic weatherJson = jsonDecode(weatherResponse.body);
+  //   return Weather.fromJson(weatherJson);
+  // }
 }
 // https://api.weatherapi.com/v1/current.json?key=474542f8d8ed494e92284130201211&q=37.6,61.83
 //   Future<int> getLocationId(String city) async {

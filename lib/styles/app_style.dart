@@ -4,9 +4,9 @@ import 'package:hexcolor/hexcolor.dart';
 class Style {
   static final primaryColor = HexColor('2E3442');
 
-  static final primaryFont = 'Poppins-Light';
+  static const primaryFont = 'Poppins-Light';
 
-  static cityNameStyle() {
+  static TextStyle cityNameStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: primaryFont,
@@ -15,7 +15,7 @@ class Style {
     );
   }
 
-  static stateNameStyle() {
+  static TextStyle stateNameStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: 'Montserrat-Regular',
@@ -23,7 +23,7 @@ class Style {
     );
   }
 
-  static currentDegreeStyle() {
+  static TextStyle currentDegreeStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: primaryFont,
@@ -32,7 +32,7 @@ class Style {
     );
   }
 
-  static conditionNameStyle() {
+  static TextStyle conditionNameStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: 'Montserrat-Regular',
@@ -40,15 +40,15 @@ class Style {
     );
   }
 
-  static meteoInfoStyle() {
+  static TextStyle meteoInfoStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: primaryFont,
-      fontSize: 10.0,
+      fontSize: 12.0,
     );
   }
 
-  static primarytextStyle() {
+  static TextStyle primarytextStyle() {
     return TextStyle(
       color: primaryColor,
       fontFamily: primaryFont,

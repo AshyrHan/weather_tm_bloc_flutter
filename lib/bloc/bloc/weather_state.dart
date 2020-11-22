@@ -11,10 +11,20 @@ class Weatherinitial extends WeatherState {}
 
 class WeatherLoading extends WeatherState {}
 
-class WeatherLoaded extends WeatherState {
-  final WeatherModel weatherModel;
+class WeatherRegionChoosed extends WeatherState {
+  final String regionName;
+  final Map map;
+  final String svgName;
 
-  WeatherLoaded({@required this.weatherModel}) : assert(weatherModel != null);
+  WeatherRegionChoosed({this.regionName, this.map, this.svgName});
+}
+
+class WeatherLoaded extends WeatherState {
+  final WeatherCurrentModel weatherModel;
+  final String nameCity;
+
+  WeatherLoaded({@required this.weatherModel, this.nameCity})
+      : assert(weatherModel != null);
 }
 
 class WeatherError extends WeatherState {}
