@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_tm_bloc/styles/app_style.dart';
 
 class Utils {
   static String dateFormatHour(String time) {
@@ -84,21 +87,51 @@ class Utils {
     }
   }
 
-  static codeToImage(int code) {
-    String iconPath;
+  static codeToImage(int code, String time) {
+    //bool _isNight;
+
+    bool isDay(String time) {
+      print(time);
+      if (time == 'daily') {
+        return true;
+      } else {
+        final parsedTime = DateTime.parse(time);
+        if (parsedTime.hour > 6 && parsedTime.hour < 19) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    // print(time);
+    // final parsedTime = DateTime.parse(time);
+    // print(parsedTime.hour);
+
+    // (parsedTime.hour > 6 && parsedTime.hour < 19)
+    //     ? _isNight = false
+    //     : _isNight = true;
 
     //String month;
     switch (code) {
       case 1000:
-        return SvgPicture.asset('assets/images/sunny.svg'); // солнечно, ясно
+        return isDay(time)
+            ? Image.asset('assets/images/sunny.png')
+            : Image.asset('assets/images/clearNight.png'); // солнечно, ясно
         break;
       case 1003:
-        return SvgPicture.asset(
-            'assets/images/partyCloudly.svg'); // Переменная облачность
+        return isDay(time)
+            ? Image.asset(
+                'assets/images/partyCloudly.png') // Переменная облачность partyCloudly.png
+            : Image.asset('assets/images/partyCloudlyNight.png');
         break;
       case 1006:
       case 1009:
-        return SvgPicture.asset('assets/images/cloudly.svg'); // Облачно
+        return Image.asset('assets/images/cloudly.png');
+        // return isDay(time)
+        //     ? Image.asset('assets/images/cloudly.png')
+        //     : Image.asset('assets/images/partyCloudlyNight.png');
+        // return SvgPicture.asset('assets/images/cloudly.svg'); // Облачно
         break;
       case 1030:
         return SvgPicture.asset('assets/images/haze.svg'); // Дымка
@@ -115,7 +148,7 @@ class Utils {
       case 1114:
       case 1258:
       case 1117:
-        return SvgPicture.asset('assets/images/snow.svg'); // снег
+        return Image.asset('assets/images/snow.png'); // снег
         break;
       case 1135:
       case 1147:
@@ -144,43 +177,56 @@ class Utils {
       case 1252:
       case 1069:
       case 1063:
-        return SvgPicture.asset('assets/images/rain.svg'); //  дождь
+        return Image.asset('assets/images/rain.png'); //  дождь
         break;
       case 1237:
       case 1261:
       case 1264:
-        return SvgPicture.asset('assets/images/freeze.svg'); // леденой дождь
+        return Image.asset('assets/images/freeze.png'); // леденой дождь
         break;
       case 1273:
       case 1276:
       case 1279:
       case 1282:
       case 1087:
-        return SvgPicture.asset('assets/images/thunder.svg'); // грозa
+        return Image.asset('assets/images/thunder.png'); // грозa
         break;
       default:
     }
 
-    return SvgPicture.asset(iconPath);
+    return Image.asset('assets/images/sunny.png');
   }
 
-  static codeToMainImage(int code) {
-    String iconPath;
+  static codeToMainImage(int code, DateTime time) {
+    bool isNight;
+
+    (time.hour > 6 && time.hour < 19) ? isNight = false : isNight = true;
 
     //String month;
     switch (code) {
       case 1000:
-        return SvgPicture.asset(
-          'assets/images/mainSunny.svg',
-        ); // солнечно, ясно
+        return isNight
+            ? SvgPicture.asset(
+                'assets/images/clearNight.svg',
+                color: Style.primaryColor,
+              )
+            : SvgPicture.asset(
+                'assets/images/mainSunny.svg',
+              ); // солнечно, ясно
         break;
       case 1003:
-        return SvgPicture.asset(
-            'assets/images/mainPartyCloud.svg'); // Переменная облачность
+        return isNight
+            ? Image.asset(
+                'assets/images/mainPartyCloudNight.svg',
+                color: Style.primaryColor,
+              )
+            : Image.asset(
+                'assets/images/mainPartyCloud.png',
+              ); // Переменная облачность
         break;
       case 1006:
       case 1009:
-        return SvgPicture.asset('assets/images/mainCloud.svg'); // Облачно
+        return Image.asset('assets/images/mainCloud.png'); // Облачно
         break;
       case 1030:
         return SvgPicture.asset('assets/images/mainHaze.svg'); // Дымка
@@ -197,7 +243,7 @@ class Utils {
       case 1114:
       case 1258:
       case 1117:
-        return SvgPicture.asset('assets/images/mainSnow.svg'); // снег
+        return Image.asset('assets/images/mainSnow.svg'); // снег
         break;
       case 1135:
       case 1147:
@@ -226,24 +272,25 @@ class Utils {
       case 1252:
       case 1069:
       case 1063:
-        return SvgPicture.asset('assets/images/mainRain.svg'); //  дождь
+        return Image.asset('assets/images/mainRain.svg'); //  дождь
         break;
       case 1237:
       case 1261:
       case 1264:
-        return SvgPicture.asset(
-            'assets/images/mainFreeze.svg'); // леденой дождь
+        return Image.asset('assets/images/mainFreeze.svg'); // леденой дождь
         break;
       case 1273:
       case 1276:
       case 1279:
       case 1282:
       case 1087:
-        return SvgPicture.asset('assets/images/mainThunder.svg'); // грозa
+        return Image.asset('assets/images/mainThunder.png'); // грозa
         break;
       default:
     }
 
-    return SvgPicture.asset(iconPath);
+    return SvgPicture.asset(
+      'assets/images/mainSunny.svg',
+    );
   }
 }

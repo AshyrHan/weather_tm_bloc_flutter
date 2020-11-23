@@ -82,7 +82,8 @@ class DailyForecast extends StatelessWidget {
             child: Padding(
                 padding: EdgeInsets.all(1.0),
                 child: Utils.codeToImage(
-                    model.forecast.forecastday[index].day.condition.code)),
+                    model.forecast.forecastday[index].day.condition.code,
+                    'daily')),
           ),
 
           //

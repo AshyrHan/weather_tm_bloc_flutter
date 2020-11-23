@@ -97,7 +97,7 @@ class MapTm extends StatelessWidget {
                     onTap: () {
                       print('ahal');
 
-                      onTap(balkanMap, 'AHAL', 'ahal.svg');
+                      onTap(ahalMap, 'AHAL', 'ahal.svg');
                     },
                     child: SvgPicture.asset(
                       'assets/images/ahal.svg',
@@ -111,7 +111,7 @@ class MapTm extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       print('dashoguz');
-                      onTap(balkanMap, 'DAŞOGUZ', 'dashoguz.svg');
+                      onTap(dashoguzMap, 'DAŞOGUZ', 'dashoguz.svg');
                     },
                     child: SvgPicture.asset(
                       'assets/images/dashoguz.svg',
@@ -126,7 +126,7 @@ class MapTm extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       print('mary');
-                      onTap(balkanMap, 'MARY', 'mary.svg');
+                      onTap(maryMap, 'MARY', 'mary.svg');
                     },
                     child: SvgPicture.asset(
                       'assets/images/mary.svg',
@@ -140,7 +140,7 @@ class MapTm extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       print('lebap');
-                      onTap(balkanMap, 'LEBAP', 'lebap.svg');
+                      onTap(lebapMap, 'LEBAP', 'lebap.svg');
                     },
                     child: SvgPicture.asset(
                       'assets/images/lebap.svg',

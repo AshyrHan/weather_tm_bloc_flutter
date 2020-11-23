@@ -10,7 +10,10 @@ import 'package:weather_tm_bloc/models/weather_model.dart';
 import 'package:weather_tm_bloc/styles/app_style.dart';
 import '../utils.dart';
 
-Widget customAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
+Widget customAppBar(
+  BuildContext context,
+  GlobalKey<ScaffoldState> key,
+) {
   // ignore: close_sinks
   final weatherBloc = BlocProvider.of<WeatherBloc>(context);
   return SafeArea(
@@ -22,7 +25,7 @@ Widget customAppBar(BuildContext context, GlobalKey<ScaffoldState> key) {
           IconButton(
               icon: Icon(
                 Icons.menu,
-                color: HexColor('2E3442'),
+                color: Style.primaryColor,
               ),
               onPressed: () {
                 key.currentState.openDrawer();
@@ -69,7 +72,7 @@ Widget weatherIcon(BuildContext context, int code) {
       child: Container(
         child: Padding(
           padding: EdgeInsets.all(1.0),
-          child: Utils.codeToMainImage(code),
+          child: Utils.codeToMainImage(code, DateTime.now()),
         ),
       ));
 }
@@ -125,7 +128,8 @@ Widget hourWeatherWidget(int index, WeatherCurrentModel model) {
           child: Padding(
             padding: const EdgeInsets.all(1.0),
             child: Utils.codeToImage(
-                model.forecast.forecastday.first.hour[index].condition.code),
+                model.forecast.forecastday.first.hour[index].condition.code,
+                model.forecast.forecastday.first.hour[index].time),
           ),
         ),
         Padding(

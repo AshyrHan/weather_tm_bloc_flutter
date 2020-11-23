@@ -2,7 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Style {
-  static final primaryColor = HexColor('2E3442');
+  static bool isDay() {
+    if (DateTime.now().hour > 6 && DateTime.now().hour < 19) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Color bgColor = isDay() ? HexColor('E5ECF4') : HexColor('313745');
+
+  static Color primaryColor = isDay() ? HexColor('2E3442') : HexColor('E2E2E2');
 
   static const primaryFont = 'Poppins-Light';
 

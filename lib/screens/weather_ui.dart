@@ -10,14 +10,33 @@ import 'package:weather_tm_bloc/widgets/more_info.dart';
 import 'package:weather_tm_bloc/widgets/widgets.dart';
 import 'package:weather_tm_bloc/widgets/daily_forecast.dart';
 
-class WeatherUI extends StatelessWidget {
+class WeatherUI extends StatefulWidget {
+  @override
+  _WeatherUIState createState() => _WeatherUIState();
+}
+
+class _WeatherUIState extends State<WeatherUI> {
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  bool _isDay;
+
+  isDay() {
+    (DateTime.now().hour > 6 && DateTime.now().hour < 19)
+        ? _isDay = true
+        : _isDay = false;
+  }
+
+  @override
+  void initState() {
+    isDay();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
       drawer: DrawerWidget(),
-      backgroundColor: HexColor('E5ECF4'),
+      backgroundColor: _isDay ? HexColor('E5ECF4') : HexColor('313745'),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: BlocBuilder<WeatherBloc, WeatherState>(

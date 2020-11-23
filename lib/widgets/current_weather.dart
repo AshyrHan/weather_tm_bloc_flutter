@@ -138,9 +138,7 @@ class CurrentWeather extends StatelessWidget {
             ),
             Text(
               '${Utils.formatTemp(feelsLike)}',
-              style: TextStyle(
-                fontSize: 12,
-              ),
+              style: TextStyle(fontSize: 12, color: Style.primaryColor),
             )
           ],
         ),
