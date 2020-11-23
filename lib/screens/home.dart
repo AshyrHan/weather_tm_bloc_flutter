@@ -6,6 +6,7 @@ import 'package:weather_tm_bloc/repository/weather-repo.dart';
 
 import 'package:weather_tm_bloc/screens/map.dart';
 import 'package:weather_tm_bloc/screens/weather_ui.dart';
+import 'package:weather_tm_bloc/styles/app_style.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class Home extends StatelessWidget {
     return BlocProvider<WeatherBloc>(
       create: (context) => WeatherBloc(weatherRepository: WeatherRepository()),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Style.bgColor,
         body: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state is Weatherinitial) {
@@ -21,6 +22,11 @@ class Home extends StatelessWidget {
             }
             if (state is WeatherLoaded) {
               return WeatherUI();
+            }
+            if (state is WeatherLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             } else {
               return Container(
                 child: Text('Error'),

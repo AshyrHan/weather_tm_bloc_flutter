@@ -18,10 +18,9 @@ class MoreInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Howanyň ortaça gözkezijileri',
-                style: Style.primarytextStyle(),
-              )
+              Text('Howanyň ortaça gözkezijileri',
+                  style: Style.primarytextStyle()
+                      .copyWith(fontWeight: FontWeight.w600))
             ],
           ),
           Divider(),

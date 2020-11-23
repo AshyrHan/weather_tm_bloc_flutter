@@ -67,8 +67,17 @@ class CurrentWeather extends StatelessWidget {
                   style: Style.meteoInfoStyle(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SvgPicture.asset('assets/images/arrow.svg'),
+                  padding: const EdgeInsets.all(4.0),
+                  child: RotationTransition(
+                    turns: AlwaysStoppedAnimation(
+                      Utils.windDirection(model.current.windDir),
+                    ),
+                    //  quarterTurns: Utils.windDirection(model.current.windDir),
+                    child: SvgPicture.asset(
+                      'assets/images/arrow.svg',
+                      color: Style.primaryColor,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -136,9 +145,14 @@ class CurrentWeather extends StatelessWidget {
               Utils.formatTemp(temp),
               style: Style.currentDegreeStyle(),
             ),
-            Text(
-              '${Utils.formatTemp(feelsLike)}',
-              style: TextStyle(fontSize: 12, color: Style.primaryColor),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${Utils.formatTemp(feelsLike)}',
+                  style: TextStyle(fontSize: 12, color: Style.primaryColor),
+                ),
+              ],
             )
           ],
         ),

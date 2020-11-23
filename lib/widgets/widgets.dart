@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:hexcolor/hexcolor.dart';
-
-import 'package:weather_tm_bloc/bloc/bloc/weather_bloc.dart';
-import 'package:weather_tm_bloc/const.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_tm_bloc/models/weather_model.dart';
 import 'package:weather_tm_bloc/styles/app_style.dart';
 import '../utils.dart';
@@ -14,30 +9,32 @@ Widget customAppBar(
   BuildContext context,
   GlobalKey<ScaffoldState> key,
 ) {
-  // ignore: close_sinks
-  final weatherBloc = BlocProvider.of<WeatherBloc>(context);
   return SafeArea(
     child: Container(
       height: 30.0,
-      //   color: Colors.red,
       child: Row(
         children: [
-          IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Style.primaryColor,
+          Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: SizedBox(
+              width: 24.0,
+              child: InkWell(
+                child: SvgPicture.asset(
+                  'assets/images/menu.svg',
+                  color: Style.primaryColor,
+                ),
+                onTap: () => key.currentState.openDrawer(),
               ),
-              onPressed: () {
-                key.currentState.openDrawer();
-              }),
-          IconButton(
-              icon: Icon(
-                Icons.verified,
-                color: HexColor('2E3442'),
-              ),
-              onPressed: () {
-                weatherBloc.add(FetchWeather(latlan: maryCity));
-              }),
+            ),
+          )
+          // IconButton(
+          //     icon: Icon(
+          //       Icons.menu,
+          //       color: Style.primaryColor,
+          //     ),
+          //     onPressed: () {
+          //       key.currentState.openDrawer();
+          //     }),
         ],
       ),
     ),
@@ -47,16 +44,18 @@ Widget customAppBar(
 Widget cityNameWidget(BuildContext context, String cityName) {
   return Container(
     // color: Colors.amber,
-    height: MediaQuery.of(context).size.height * 0.12,
+    height: MediaQuery.of(context).size.height * 0.10,
     width: MediaQuery.of(context).size.width,
     child: Column(
       children: [
         Text(
           cityName ?? '',
+          maxLines: 1,
+          overflow: TextOverflow.clip,
           style: Style.cityNameStyle(),
         ),
         Text(
-          'Turkmenistan',
+          'Türkmenistan',
           style: Style.stateNameStyle(),
         )
       ],
@@ -67,11 +66,11 @@ Widget cityNameWidget(BuildContext context, String cityName) {
 Widget weatherIcon(BuildContext context, int code) {
   return Container(
       // color: Colors.lightBlue,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.35,
       width: MediaQuery.of(context).size.width * 0.6,
       child: Container(
         child: Padding(
-          padding: EdgeInsets.all(1.0),
+          padding: EdgeInsets.all(10.0),
           child: Utils.codeToMainImage(code, DateTime.now()),
         ),
       ));

@@ -91,7 +91,7 @@ class Utils {
     //bool _isNight;
 
     bool isDay(String time) {
-      print(time);
+      // print(time);
       if (time == 'daily') {
         return true;
       } else {
@@ -103,14 +103,6 @@ class Utils {
         }
       }
     }
-
-    // print(time);
-    // final parsedTime = DateTime.parse(time);
-    // print(parsedTime.hour);
-
-    // (parsedTime.hour > 6 && parsedTime.hour < 19)
-    //     ? _isNight = false
-    //     : _isNight = true;
 
     //String month;
     switch (code) {
@@ -206,8 +198,8 @@ class Utils {
     switch (code) {
       case 1000:
         return isNight
-            ? SvgPicture.asset(
-                'assets/images/clearNight.svg',
+            ? Image.asset(
+                'assets/images/mainClearNight.png',
                 color: Style.primaryColor,
               )
             : SvgPicture.asset(
@@ -216,7 +208,7 @@ class Utils {
         break;
       case 1003:
         return isNight
-            ? Image.asset(
+            ? SvgPicture.asset(
                 'assets/images/mainPartyCloudNight.svg',
                 color: Style.primaryColor,
               )
@@ -292,5 +284,45 @@ class Utils {
     return SvgPicture.asset(
       'assets/images/mainSunny.svg',
     );
+  }
+
+  static double windDirection(String direction) {
+    print(direction);
+    switch (direction) {
+      case 'N':
+        return (1 / 360);
+        break;
+      case 'NNE':
+      case 'NE':
+      case 'ENE':
+        return (45 / 360);
+        break;
+      case 'E':
+        return (90 / 360);
+        break;
+      case 'ESE':
+      case 'SE':
+      case 'SSE':
+        return (135 / 360);
+        break;
+      case 'S':
+        return (180 / 360);
+        break;
+      case 'SSW':
+      case 'SW':
+      case 'WSW':
+        return (225 / 360);
+        break;
+      case 'W':
+        return (275 / 360);
+        break;
+      case 'WNW':
+      case 'NW':
+      case 'NNW':
+        return (315 / 360);
+        break;
+      default:
+        return (1 / 360);
+    }
   }
 }

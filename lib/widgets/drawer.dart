@@ -6,7 +6,6 @@ import 'package:weather_tm_bloc/const.dart';
 import 'package:weather_tm_bloc/styles/app_style.dart';
 import 'package:weather_tm_bloc/utils.dart';
 
-// ignore: must_be_immutable
 class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,6 @@ class DrawerWidget extends StatelessWidget {
                 }
                 return Container();
               }),
-
               Container(
                 child: expTile(ahalMap, 'Ahal welayat'),
               ),
@@ -82,8 +80,15 @@ class DrawerWidget extends StatelessWidget {
               Container(
                 child: expTile(lebapMap, 'Lebap welayat'),
               ),
-
-              //  ButtonInitial(),
+              Divider(),
+              ListTile(
+                title: Text('created by:'),
+                subtitle: Text(
+                  'Yyldyrym.Design',
+                  style: Style.primarytextStyle(),
+                ),
+              ),
+              Divider(),
             ],
           ),
         ),

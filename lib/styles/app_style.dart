@@ -21,7 +21,7 @@ class Style {
       color: primaryColor,
       fontFamily: primaryFont,
       height: 1.0,
-      fontSize: 50.0,
+      fontSize: 40.0,
     );
   }
 
@@ -29,7 +29,7 @@ class Style {
     return TextStyle(
       color: primaryColor,
       fontFamily: 'Montserrat-Regular',
-      fontSize: 28.0,
+      fontSize: 18.0,
     );
   }
 
@@ -38,7 +38,7 @@ class Style {
       color: primaryColor,
       fontFamily: primaryFont,
       height: 1.0,
-      fontSize: 43.0,
+      fontSize: 40.0,
     );
   }
 
